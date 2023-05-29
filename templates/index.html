@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatBot</title>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
@@ -179,16 +181,27 @@
 
         if (userMessage !== '') {
             const chatContainer = document.querySelector('.chat-container');
+            const msgContainer = document.createElement('div');
+            
+            msgContainer.classList.add('chat-message');
+            chatContainer.appendChild(msgContainer);
+            
             const userMessageElement = document.createElement('div');
-            userMessageElement.classList.add('chat-message', 'user-message');
+            const botMessageElement = document.createElement('div');
+            
+            userMessageElement.classList.add('user-message');
+            botMessageElement.classList.add('bot-message');
+            
             userMessageElement.textContent = 'User: ' + userMessage;
-
-            chatContainer.appendChild(userMessageElement);
-
-            // Add logic here to handle the user message and generate a bot response
-
+            botMessageElement.textContent = 'ChatBot: ' + 'Hi there! How can I assist you today?';
+            
+            msgContainer.appendChild(userMessageElement);
+            msgContainer.appendChild(botMessageElement);
+            
             messageInput.value = '';
             chatContainer.scrollTop = chatContainer.scrollHeight;
+
+
         }
     }
 </script>
