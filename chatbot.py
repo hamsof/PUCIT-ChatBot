@@ -48,8 +48,8 @@ def hello_world():
 # Route for prediction
 @app.route('/predict')
 def predict(input):
-    #message = request.form['message']
-    output = chat(input)
+    message = request.form['message']
+    output = chat(message)
     return output
 
 if __name__ == '__main__':
