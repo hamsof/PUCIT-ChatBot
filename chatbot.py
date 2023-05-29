@@ -46,9 +46,9 @@ def hello_world():
     return render_template('index.html')
 
 # Route for prediction
-@app.route('/predict')
-def predict(input):
-    message = request.form['message']
+@app.route('/predict', methods=['POST'])
+def predict():
+    message = request.json['message']
     output = chat(message)
     return output
 

@@ -195,29 +195,33 @@
             userMessageElement.textContent = 'User: ' + userMessage;
             msgContainer.appendChild(userMessageElement);
             
-            botMessageElement.textContent = chatBotResponse(userMessage);
-            msgContainer.appendChild(botMessageElement);
+            chatBotResponse(userMessage, (response)=>{
+                botMessageElement.textContent = 'ChatBot: ' + response;
+                msgContainer.appendChild(botMessageElement);
+            });
+            
             
             messageInput.value = '';
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
 
         }
-        function chatBotResponse(userMessage){
+        function chatBotResponse(userMessage, callback){
             //call api to pridict the response
-            // $.agax({
-            //     url: 'http://localhost:5000/predict',
-            //     type: 'POST',
-            //     data: JSON.stringify({message: userMessage}),
-            //     contentType: 'application/json; charset=utf-8',
-            //     success: function (response) {
-            //         return response;
-            //     },
-            //     error: function (error) {
-            //         console.log(error);
-            //     }
-            // });
-            return "ChatBot: Hi there! How can I assist you today?"
+            $.ajax({
+                url: 'http://localhost:5000/predict',
+                method : 'POST',
+                data: JSON.stringify({message: userMessage}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    callback(response);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    console.log(JSON.stringify({message: userMessage}));
+                },
+
+            });
         }
     }
 </script>
