@@ -196,7 +196,7 @@
         function chatBotResponse(userMessage, callback){
             //call api to pridict the response
             $.ajax({
-                url: 'http://localhost:5000/predict',
+                url: 'https://pucitchatbot.herokuapp.com/predict',
                 method : 'POST',
                 data: JSON.stringify({message: userMessage}),
                 contentType: 'application/json; charset=utf-8',
