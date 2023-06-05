@@ -17,7 +17,7 @@ with open("intent.json") as file:
 
 def chat(input):
     # load trained model
-    model = keras.models.load_model('chat_model')
+    model = keras.models.load_model('model.h5')
     # load tokenizer object
     with open('tokenizer.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
