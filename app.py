@@ -1,41 +1,9 @@
 from flask import Flask, request, render_template
-import pickle
-import json 
-import numpy as np
-from tensorflow import keras
-
+from chatbotModule import predict_and_reply
 
 app = Flask(__name__)
 
 # Load the pickled function
-
-
-
-with open("intent.json") as file:
-    data = json.load(file)
-
-
-def chat(input):
-    # load trained model
-    model = keras.models.load_model('model.h5')
-    # load tokenizer object
-    with open('tokenizer.pickle', 'rb') as handle:
-        tokenizer = pickle.load(handle)
-
-    # load label encoder object
-    with open('label_encoder.pickle', 'rb') as enc:
-        lbl_encoder = pickle.load(enc)
-
-    # parameters
-    max_len = 20
-    result = model.predict(keras.preprocessing.sequence.pad_sequences(tokenizer.texts_to_sequences([input]),
-                                            truncating='post', maxlen=max_len))
-    tag = lbl_encoder.inverse_transform([np.argmax(result)])
-
-    for i in data['intents']:
-        if i['tag'] == tag:
-            return np.random.choice(i['responses'])
-
 
 
 
@@ -49,7 +17,7 @@ def hello_world():
 @app.route('/predict', methods=['POST'])
 def predict():
     message = request.json['message']
-    output = chat(message)
+    output = predict_and_reply(message)
     return output
 
 if __name__ == '__main__':

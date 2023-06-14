@@ -1,221 +1,241 @@
 <!DOCTYPE html>
+
 <body lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatBot</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ChatBot</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-
-    <style>
-        body{
-            margin: 0;
-            padding: 0;
-            background-color: rgb(78 76 76);
-        }
-        .heading{
-            font-size: 40px;
-            color: #fff;
-            font-family: 'Pangolin', cursive;
-        }
-        .frontpage {
-            background-color: rgb(78 76 76);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            color: #fff;
-            font-family: Arial, sans-serif;
-        }
-
-        .chat-container {
-            width: 900px;
-            max-width: 90%;
-            height: 300px;
-            max-height: 90%;
-            background-color: #3b3939;
-            border-radius: 10px;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .chat-message {
-            margin-bottom: 10px;
-            height: 100px;
-        }
-
-        .user-message {
-            margin-bottom: 20px;
-            /* text-align: right; */
-        }
-        .bot-message{
-            color: #ab92c3;
-        }
-
-        .input-container {
-            width: 700px;
-            margin-top: 20px;
-            display: flex;
-            flex-direction: row;
-            align-items:flex-end;
-            justify-content: space-evenly;
-        }
-
-        .input-container textarea {
-            width: 70%;
-            height: 50px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 16px;
-            resize: none;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        .input-container button {
-            margin-top: 10px;
-            padding: 10px 30px;
-            font-size: 20px;
-            background-color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .About {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-        }
-        .about_section{
-            text-align: center;
-            max-width: 600px;
-        }
-        .intro{
-            font-size: larger;
-            font-family: 'Roboto', sans-serif;
-        }
-        footer{
-            background-color: #2c2b2b;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100px;
-            width: 100%;
-            margin-top: 20px;
-        }
-        a {
-            color: #fff;
-            text-decoration: none;
-            text-decoration-line: underline;
-        }
-
-    </style>
-</head>
-<body>
-<section class="frontpage">
-    <div class="intro">
-        <h1 class="heading">PUCIT ChatBot</h1>
-    </div>
-    <div class="chat-container">
-    </div>
-
-    <div class="input-container">
-        <textarea id="messageInput" placeholder="Type your message..."></textarea>
-        <button onclick="sendMessage()">Send</button>
-    </div>
-    <div class="copy_rights">
-
-    </div>
-
-    
-</section>
-
-<section class="About">
-    <div class="about_section">
-    <h1 class="heading">About Us</h1>
-                    <p class="intro"> We are final semester students from FCIT (Faculty of Computing and Information Technology Lahore
-                    ). Our aim to build this R&D project was to learn about Artificial Intelligence. We have covered a lot of technologies like 
-                starting from ML then to advanced topics like ANN, RNN, seqseq, LSTMs etc. We have made this project using deep learning and web interface is made
-            using Flask and jquery ajax APIs. It is deployed using Heroku.</p>
-            <p>We are thankful for our Supervisor <a href="http://www.arifbutt.me/"> Dr. Arif Butt </a> for his assistance. You can full description and source code <a href="https://github.com/hamsof/PUCITChatBotFYP">Here</a> </p>
-            <p>Contributors : <a href="https://www.linkedin.com/in/hafiz-abdulmanan-7583b21aa/"> {Hafiz Abdulmanan} </a><a href="#"> {Hamza} </a><a href="#"> {Farogh} </a><a href="#"> {Khadija} </a><a href="#"> {Ahmad} </a></p>
-    </div>
-</section>
-
-<footer>
-    <div class="copy_rights">
-        <p>© 2023 PUCIT ChatBot. All Rights Reserved | <a href="https://github.com/hamsof/PUCITChatBotFYP">Github Repo</a></p>
-    </div>
-</footer>
-<script>
-    function sendMessage() {
-        const messageInput = document.getElementById('messageInput');
-        const userMessage = messageInput.value.trim();
-
-        if (userMessage !== '') {
-            const chatContainer = document.querySelector('.chat-container');
-            const msgContainer = document.createElement('div');
-            
-            msgContainer.classList.add('chat-message');
-            chatContainer.appendChild(msgContainer);
-            
-            const userMessageElement = document.createElement('div');
-            const botMessageElement = document.createElement('div');
-            
-            userMessageElement.classList.add('user-message');
-            botMessageElement.classList.add('bot-message');
-            
-            userMessageElement.textContent = 'User: ' + userMessage;
-            msgContainer.appendChild(userMessageElement);
-            
-            chatBotResponse(userMessage, (response)=>{
-                botMessageElement.textContent = 'ChatBot: ' + response;
-                msgContainer.appendChild(botMessageElement);
-            });
-            
-            
-            messageInput.value = '';
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
 
-        }
-        function chatBotResponse(userMessage, callback){
-            //call api to pridict the response
-            $.ajax({
-                url: 'https://pucitchatbot.herokuapp.com/predict',
-                method : 'POST',
-                data: JSON.stringify({message: userMessage}),
-                contentType: 'application/json; charset=utf-8',
-                success: function (response) {
-                    callback(response);
-                },
-                error: function (error) {
-                    console.log(error.responseText);
-                    console.log(JSON.stringify({message: userMessage}));
-                },
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: rgb(78 76 76);
+            }
 
-            });
-        }
-    }
-</script>
-</body>
-</html>
+            .heading {
+                font-size: 40px;
+                color: #fff;
+                font-family: 'Pangolin', cursive;
+            }
+
+            .frontpage {
+                background-color: rgb(78 76 76);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+                color: #fff;
+                font-family: Arial, sans-serif;
+            }
+
+            .chat-container {
+                width: 900px;
+                max-width: 90%;
+                height: 300px;
+                max-height: 90%;
+                background-color: #3b3939;
+                border-radius: 10px;
+                padding: 20px;
+                overflow-y: auto;
+            }
+
+            .chat-message {
+                margin-bottom: 10px;
+                height: 100px;
+            }
+
+            .user-message {
+                margin-bottom: 20px;
+                /* text-align: right; */
+            }
+
+            .bot-message {
+                color: #ab92c3;
+            }
+
+            .input-container {
+                width: 700px;
+                margin-top: 20px;
+                display: flex;
+                flex-direction: row;
+                align-items: flex-end;
+                justify-content: space-evenly;
+            }
+
+            .input-container textarea {
+                width: 70%;
+                height: 50px;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                padding: 10px;
+                font-size: 16px;
+                resize: none;
+                box-sizing: border-box;
+                outline: none;
+            }
+
+            .input-container button {
+                margin-top: 10px;
+                padding: 10px 30px;
+                font-size: 20px;
+                background-color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .About {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+            }
+
+            .about_section {
+                text-align: center;
+                max-width: 600px;
+            }
+
+            .intro {
+                font-size: larger;
+                font-family: 'Roboto', sans-serif;
+            }
+
+            footer {
+                background-color: #2c2b2b;
+                color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            a {
+                color: #fff;
+                text-decoration: none;
+                text-decoration-line: underline;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="frontpage">
+            <div class="intro">
+                <h1 class="heading">PUCIT ChatBot</h1>
+            </div>
+            <div class="chat-container">
+            </div>
+
+            <div class="input-container">
+                <textarea id="messageInput" placeholder="Type your message..."></textarea>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+            <div class="copy_rights">
+
+            </div>
+
+
+        </section>
+
+        <section class="About">
+            <div class="about_section">
+                <h1 class="heading">About Us</h1>
+                <p class="intro"> We are final semester students from FCIT (Faculty of Computing and Information
+                    Technology Lahore
+                    ). Our aim to build this R&D project was to learn about Artificial Intelligence. We have covered a
+                    lot of technologies like
+                    starting from ML then to advanced topics like ANN, RNN, seqseq, LSTMs etc. We have made this project
+                    using deep learning and web interface is made
+                    using Flask and jquery ajax APIs. It is deployed using Heroku.</p>
+                <p>We are thankful for our Supervisor <a href="http://www.arifbutt.me/"> Dr. Arif Butt </a> for his
+                    assistance. You can full description and source code <a
+                        href="https://github.com/hamsof/PUCITChatBotFYP">Here</a> </p>
+                <p>Contributors : <a href="https://www.linkedin.com/in/hafiz-abdulmanan-7583b21aa/"> {Hafiz Abdulmanan}
+                    </a><a href="#"> {Hamza} </a><a href="#"> {Farogh} </a><a href="#"> {Khadija} </a><a href="#">
+                        {Ahmad} </a></p>
+            </div>
+        </section>
+
+        <footer>
+            <div class="copy_rights">
+                <p>© 2023 PUCIT ChatBot. All Rights Reserved | <a
+                        href="https://github.com/hamsof/PUCITChatBotFYP">Github Repo</a></p>
+            </div>
+        </footer>
+        <script>
+            function sendMessage() {
+                const messageInput = document.getElementById('messageInput');
+                const userMessage = messageInput.value.trim();
+
+                if (userMessage !== '') {
+                    const chatContainer = document.querySelector('.chat-container');
+                    const msgContainer = document.createElement('div');
+
+                    msgContainer.classList.add('chat-message');
+                    chatContainer.appendChild(msgContainer);
+
+                    const userMessageElement = document.createElement('div');
+                    const botMessageElement = document.createElement('div');
+
+                    userMessageElement.classList.add('user-message');
+                    botMessageElement.classList.add('bot-message');
+
+                    userMessageElement.textContent = 'User: ' + userMessage;
+                    msgContainer.appendChild(userMessageElement);
+
+                    chatBotResponse(userMessage, (response) => {
+                        botMessageElement.textContent = 'ChatBot: ' + response;
+                        msgContainer.appendChild(botMessageElement);
+                    });
+
+
+                    messageInput.value = '';
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+
+                }
+                function chatBotResponse(userMessage, callback) {
+                    //call api to pridict the response
+                    //local env = 
+                    //deployed env = https://pucitchatbot.herokuapp.com/predict
+                    $.ajax({
+                        url: 'https://pucitchatbot.herokuapp.com/predict',
+                        method: 'POST',
+                        data: JSON.stringify({ message: userMessage }),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            callback(response);
+                        },
+                        error: function (error) {
+                            console.log(error.responseText);
+                            console.log(JSON.stringify({ message: userMessage }));
+                        },
+
+                    });
+                }
+            }
+        </script>
+    </body>
+
+    </html>
