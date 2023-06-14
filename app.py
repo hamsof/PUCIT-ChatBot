@@ -3,12 +3,6 @@ from chatbotModule import predict_and_reply
 
 app = Flask(__name__)
 
-# Load the pickled function
-
-
-
-
-# Route for the home page
 @app.route('/')
 def hello_world():
     return render_template('index.html')
