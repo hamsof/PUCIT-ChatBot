@@ -1,14 +1,17 @@
-import json
-import nltk
+import nltk.downloader
+
+# Download the 'punkt' resource
+nltk.downloader.download('punkt')
+
+# Download the 'wordnet' resource
+nltk.downloader.download('wordnet')
+
 import random
 import pickle
 import numpy as np
 from keras.models import load_model
 from nltk.stem import WordNetLemmatizer
-
-
-nltk.download('wordnet')
-nltk.download('punkt')
+from nltk.tokenize import word_tokenize
 
 # Load the preprocessed data
 data = pickle.load(open('chatbot_data.pkl', 'rb'))
@@ -19,16 +22,14 @@ output = data['output']
 # Create a lemmatizer object
 lemmatizer = WordNetLemmatizer()
 
-
+# Load the pretrained model
 model = load_model('chatbot_model.h5')
-
-
 
 # Function to predict and generate a response
 
 def predict_and_reply(sentence):
     # Tokenize and lemmatize the user input
-    sentence_words = nltk.word_tokenize(sentence)
+    sentence_words = word_tokenize(sentence)
     sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
 
     # Create a bag of words for the user input
@@ -62,4 +63,3 @@ def predict_and_reply(sentence):
             responses = intent['responses']
             reply = random.choice(responses)
             return reply
-        
